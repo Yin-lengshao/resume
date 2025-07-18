@@ -1,0 +1,1352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>冷某少的玻璃拟态简历</title>
+  <style>
+    :root {
+      --primary: #e0f7fa;
+      --secondary: #b2ebf2;
+      --accent: #80deea;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --glass-border: rgba(255, 255, 255, 0.3);
+      --text-primary: #263238;
+      --text-secondary: #455a64;
+      --text-light: #607d8b;
+      --shadow-glass: 0 8px 32px 0 rgba(178, 235, 242, 0.2);
+      --shadow-hover: 0 12px 48px 0 rgba(178, 235, 242, 0.3);
+      --blur: blur(10px);
+      --radius: 20px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', sans-serif;
+      min-height: 100vh;
+      background: #f5f5f5;
+      background: linear-gradient(135deg, #ffffff, #e0f7fa, #b2ebf2);
+      color: var(--text-primary);
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    /* 动态背景 */
+    .bg-animation {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .gradient-sphere {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.4;
+      animation: float 20s infinite ease-in-out;
+    }
+    
+    .sphere-1 {
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, #e0f7fa 0%, #b2ebf2 100%);
+      top: -200px;
+      left: -200px;
+      animation-delay: 0s;
+    }
+    
+    .sphere-2 {
+      width: 300px;
+      height: 300px;
+      background: linear-gradient(135deg, #80deea 0%, #4dd0e1 100%);
+      bottom: -150px;
+      right: -150px;
+      animation-delay: 5s;
+    }
+    
+    .sphere-3 {
+      width: 250px;
+      height: 250px;
+      background: linear-gradient(135deg, #b2ebf2 0%, #e0f7fa 100%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation-delay: 10s;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(50px, -50px) scale(1.1); }
+      50% { transform: translate(-30px, 30px) scale(0.9); }
+      75% { transform: translate(30px, 50px) scale(1.05); }
+    }
+    
+    /* 修复后的导航栏样式 */
+    .glass-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border-top: 1px solid var(--glass-border);
+      padding: 10px 5px;
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding: 0 5px;
+    }
+
+    .nav-item {
+      color: var(--text-primary);
+      text-decoration: none;
+      padding: 8px 5px;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .nav-icon {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+      transition: all 0.3s ease;
+      color: var(--text-primary);
+    }
+
+    .nav-text {
+      font-size: 0.7rem;
+      white-space: nowrap;
+      transition: all 0.3s ease;
+      display: block;
+      color: var(--text-primary);
+    }
+
+    .nav-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 15px;
+      z-index: -1;
+    }
+
+    .nav-item:hover::before,
+    .nav-item.active::before {
+      opacity: 0.8;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .nav-item.active .nav-icon {
+      transform: scale(1.2);
+      color: white;
+    }
+    
+    /* 主容器 */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 15px 80px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* 头部个人信息卡片 */
+    .profile-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      padding: 40px 30px;
+      margin-bottom: 30px;
+      box-shadow: var(--shadow-glass);
+      position: relative;
+      overflow: hidden;
+      animation: slideIn 0.8s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .profile-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(224, 247, 250, 0.1) 0%, transparent 70%);
+      animation: rotate 30s linear infinite;
+    }
+    
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    
+    .profile-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+    
+    /* 头像容器 */
+    .avatar-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    .avatar-glass {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 2px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 
+        0 0 30px rgba(178, 235, 242, 0.3),
+        inset 0 0 20px rgba(255, 255, 255, 0.2);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 30px rgba(178, 235, 242, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.2); }
+      50% { box-shadow: 0 0 50px rgba(178, 235, 242, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.3); }
+    }
+    
+    .avatar-glass::before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, transparent 30%, rgba(255, 255, 255, 0.3) 100%);
+      animation: shine 3s ease-in-out infinite;
+    }
+    
+    @keyframes shine {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(180deg); }
+    }
+    
+    .avatar-icon {
+      font-size: 3rem;
+      color: var(--text-primary);
+    }
+    
+    .profile-info {
+      text-align: center;
+    }
+    
+    .profile-info h1 {
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .profile-info .subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .contact-info {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .contact-item {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 6px 12px;
+      border-radius: 20px;
+      color: var(--text-primary);
+      font-size: 0.8rem;
+      border: 1px solid var(--glass-border);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .contact-item:hover {
+      background: rgba(255, 255, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* 瀑布流布局 */
+    .masonry-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    /* 玻璃卡片基础样式 */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      -webkit-backdrop-filter: var(--blur);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: var(--shadow-glass);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      animation: fadeInUp 0.6s ease-out forwards;
+      opacity: 0;
+    }
+    
+    .glass-card:nth-child(1) { animation-delay: 0.1s; }
+    .glass-card:nth-child(2) { animation-delay: 0.2s; }
+    .glass-card:nth-child(3) { animation-delay: 0.3s; }
+    .glass-card:nth-child(4) { animation-delay: 0.4s; }
+    .glass-card:nth-child(5) { animation-delay: 0.5s; }
+    .glass-card:nth-child(6) { animation-delay: 0.6s; }
+    
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+    
+    .glass-card:hover {
+      transform: translateY(-5px) scale(1.02);
+      box-shadow: var(--shadow-hover);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .glass-card:hover::before {
+      left: 100%;
+    }
+    
+    .card-title {
+      font-size: 1.3rem;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 15px rgba(178, 235, 242, 0.3);
+    }
+    
+    .card-content {
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    /* 教育背景时间线 */
+    .timeline {
+      position: relative;
+      padding-left: 40px;
+    }
+    
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--primary), var(--secondary));
+      box-shadow: 0 0 10px rgba(178, 235, 242, 0.3);
+    }
+    
+    .timeline-item {
+      position: relative;
+      margin-bottom: 30px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .timeline-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(5px);
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -34px;
+      top: 25px;
+      width: 12px;
+      height: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(178, 235, 242, 0.5);
+    }
+    
+    .timeline-date {
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+    
+    .timeline-title {
+      color: var(--text-primary);
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+    }
+    
+    .timeline-desc {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    /* 工作经历 */
+    .experience-item {
+      margin-bottom: 30px;
+    }
+    
+    .exp-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+      gap: 5px;
+    }
+    
+    .exp-title {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+    
+    .exp-period {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+    
+    .exp-position {
+      color: var(--text-secondary);
+      margin-bottom: 15px;
+      font-size: 0.95rem;
+    }
+    
+    .exp-desc {
+      color: var(--text-light);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .exp-responsibilities {
+      padding-left: 20px;
+    }
+    
+    .exp-responsibilities li {
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      line-height: 1.5;
+      position: relative;
+    }
+    
+    .exp-responsibilities li::before {
+      content: '•';
+      color: var(--accent);
+      position: absolute;
+      left: -15px;
+    }
+    
+    /* 技能图表 */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .skill-item {
+      margin-bottom: 20px;
+    }
+    
+    .skill-name {
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .skill-level {
+      height: 6px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+    }
+    
+    .skill-level-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      border-radius: 3px;
+      position: relative;
+    }
+    
+    .skill-level-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.4), 
+        transparent);
+      animation: shine 2s infinite;
+    }
+    
+    /* 项目经验 */
+    .project-item {
+      margin-bottom: 30px;
+    }
+    
+    .project-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 10px;
+      gap: 5px;
+    }
+    
+    .project-title {
+      font-size: 1.1rem;
+      color: var(--text-primary);
+    }
+    
+    .project-role {
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+    
+    .project-desc {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .project-achievements {
+      padding-left: 20px;
+    }
+    
+    .project-achievements li {
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      line-height: 1.5;
+      position: relative;
+    }
+    
+    .project-achievements li::before {
+      content: '•';
+      color: var(--accent);
+      position: absolute;
+      left: -15px;
+    }
+    
+    /* 证书和荣誉 */
+    .awards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    
+    .award-item {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 15px;
+      padding: 20px;
+      transition: all 0.3s ease;
+    }
+    
+    .award-item:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-5px);
+    }
+    
+    .award-title {
+      color: var(--text-primary);
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    
+    .award-org {
+      color: var(--accent);
+      font-size: 0.85rem;
+      margin-bottom: 10px;
+    }
+    
+    .award-desc {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    
+    /* 返回首页按钮 */
+    .back-to-home {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(178, 235, 242, 0.3);
+      border: none;
+      cursor: pointer;
+    }
+    
+    .back-to-home:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(178, 235, 242, 0.4);
+    }
+    
+    /* 页脚 */
+    .footer {
+      text-align: center;
+      padding: 30px 0;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+    
+    /* 响应式设计 - 平板及以上 */
+    @media (min-width: 768px) {
+      .container {
+        padding: 120px 20px 80px;
+      }
+      
+      .profile-content {
+        flex-direction: row;
+        gap: 60px;
+        text-align: left;
+      }
+      
+      .profile-info {
+        text-align: left;
+      }
+      
+      .profile-card {
+        padding: 60px;
+      }
+      
+      .avatar-glass {
+        width: 150px;
+        height: 150px;
+      }
+      
+      .avatar-icon {
+        font-size: 4rem;
+      }
+      
+      .profile-info h1 {
+        font-size: 2.5rem;
+      }
+      
+      .profile-info .subtitle {
+        font-size: 1.1rem;
+      }
+      
+      .contact-info {
+        justify-content: flex-start;
+        gap: 20px;
+      }
+      
+      .contact-item {
+        padding: 8px 16px;
+        font-size: 0.95rem;
+      }
+      
+      .masonry-grid {
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      }
+      
+      .skills-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+      
+      .awards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      }
+      
+      .exp-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      .project-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      /* 导航栏在平板及以上显示完整 */
+      .glass-nav {
+        top: 20px;
+        bottom: auto;
+        border-top: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 10px 20px;
+      }
+      
+      .nav-container {
+        justify-content: center;
+        gap: 15px;
+        overflow-x: visible;
+      }
+      
+      .nav-item {
+        flex-direction: row;
+        gap: 8px;
+        padding: 8px 15px;
+        min-width: auto;
+      }
+      
+      .nav-text {
+        font-size: 0.85rem;
+      }
+    }
+    
+    /* 小屏手机优化 */
+    @media (max-width: 480px) {
+      .nav-text {
+        font-size: 0.6rem;
+      }
+      
+      .nav-item {
+        min-width: 50px;
+        padding: 8px 3px;
+      }
+      
+      .profile-info h1 {
+        font-size: 1.6rem;
+      }
+    }
+    
+    /* 横屏优化 */
+    @media (orientation: landscape) and (max-height: 500px) {
+      .glass-nav {
+        padding: 5px 10px;
+      }
+      
+      .nav-item {
+        flex-direction: row;
+        gap: 5px;
+        padding: 5px 10px;
+      }
+      
+      .nav-text {
+        font-size: 0.7rem;
+      }
+      
+      .container {
+        padding-top: 70px;
+        padding-bottom: 30px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <!-- 动态背景 -->
+  <div class="bg-animation">
+    <div class="gradient-sphere sphere-1"></div>
+    <div class="gradient-sphere sphere-2"></div>
+    <div class="gradient-sphere sphere-3"></div>
+  </div>
+  
+  <!-- 修复后的玻璃导航栏 -->
+  <nav class="glass-nav">
+    <div class="nav-container">
+      <a href="#profile" class="nav-item active">
+        <i class="nav-icon fas fa-user"></i>
+        <span class="nav-text">个人信息</span>
+      </a>
+      <a href="#education" class="nav-item">
+        <i class="nav-icon fas fa-graduation-cap"></i>
+        <span class="nav-text">教育背景</span>
+      </a>
+      <a href="#experience" class="nav-item">
+        <i class="nav-icon fas fa-briefcase"></i>
+        <span class="nav-text">工作经历</span>
+      </a>
+      <a href="#projects" class="nav-item">
+        <i class="nav-icon fas fa-project-diagram"></i>
+        <span class="nav-text">项目经验</span>
+      </a>
+      <a href="#skills" class="nav-item">
+        <i class="nav-icon fas fa-code"></i>
+        <span class="nav-text">技能特长</span>
+      </a>
+      <a href="#awards" class="nav-item">
+        <i class="nav-icon fas fa-award"></i>
+        <span class="nav-text">荣誉奖项</span>
+      </a>
+      <a href="#appraise" class="nav-item">
+        <i class="nav-icon fas fa-comment"></i>
+        <span class="nav-text">自我评价</span>
+      </a>
+    </div>
+  </nav>
+  
+  <!-- 主容器 -->
+  <div class="container">
+    <!-- 个人信息 -->
+    <section id="profile" class="profile-card">
+      <div class="profile-content">
+        <div class="avatar-container">
+          <div class="avatar-glass">
+            <i class="avatar-icon fas fa-user-astronaut"></i>
+          </div>
+        </div>
+        <div class="profile-info">
+          <h1>冷某少</h1>
+          <p class="subtitle">银河系系长 | 多维空间外交专家 | 宇宙治理工程师</p>
+          <div class="contact-info">
+            <div class="contact-item">
+              <i class="fas fa-venus-mars"></i> 男
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-birthday-cake"></i> 公元前 80359004 年 10 月 23 日
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-dna"></i> 碳基（含 3.14% 硅基改良基因）
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-flag"></i> 宇宙共产主义者
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i> (+86)137 3485 3055
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i> 3351515598@qq.com
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i> 银河系太阳系第三行星东经 120° 北纬 30°
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 教育背景 -->
+    <section id="education" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+        <h2>教育背景</h2>
+      </div>
+      <div class="card-content">
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2000-2004</div>
+            <div class="timeline-title">太阳系第一高等学府 - 宇宙管理学士</div>
+            <div class="timeline-desc">
+              主修《恒星生命周期规划》《行星轨道微积分》，毕业设计《小行星带资源最优分配模型》获"太阳系学术新星奖"
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2004-2007</div>
+            <div class="timeline-title">银河系行政学院 - 星系治理硕士</div>
+            <div class="timeline-desc">
+              研究方向为《旋臂文明协同发展机制》，发表《椭圆星系与螺旋星系治理模式对比》等3篇核心期刊论文
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2007-2010</div>
+            <div class="timeline-title">宇宙边界研究中心 - 多维空间外交博士</div>
+            <div class="timeline-desc">
+              博士论文《11维空间外交礼仪规范》被纳入《宇宙外交手册》，导师为"超弦理论外交学派"创始人
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 工作经历 -->
+    <section id="experience" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-briefcase"></i>
+        </div>
+        <h2>工作经历</h2>
+      </div>
+      <div class="card-content">
+        <div class="experience-item">
+          <div class="exp-header">
+            <h3 class="exp-title">银河系管理委员会</h3>
+            <span class="exp-period">2013.1 - 至今</span>
+          </div>
+          <div class="exp-position">银河系系长（正星系级）</div>
+          <div class="exp-desc">
+            下属团队：7个旋臂管理处（含200名恒星监察官、50名黑洞管理员、30名暗能量调度师）
+          </div>
+          <ul class="exp-responsibilities">
+            <li>建立"旋臂健康度监测系统"，实时追踪2000亿颗恒星运行数据，将异常碰撞预警响应时间缩短至0.5光年</li>
+            <li>创新"黑洞分级清理机制"，按质量等级采用"微型黑洞蒸发处理""巨型黑洞引力屏障加固"等差异化方案，近5年引力泄漏事故下降67%</li>
+            <li>设计"文明发展指数评估体系"，从科技突破力、资源可持续性、星际友好度等12个维度评选，已发掘108颗潜力行星并纳入重点培育计划</li>
+            <li>牵头制定《银河系恒星能耗标准》，通过"主序星燃烧效率优化""红巨星膨胀限制"等措施，使超新星爆发频率从年均37次降至19次</li>
+            <li>主导"星际交通一体化"项目，构建包含3条跨旋臂光速航道、156个虫洞枢纽的交通网络，行星间通勤效率提升300%，获"银河系年度工程金奖"</li>
+            <li>建立"暗物质/暗能量动态平衡模型"，精准预测资源消耗趋势，近三年预算执行偏差率控制在±3%以内</li>
+            <li>担任星系合并谈判首席代表，提出"双星系文化融合过渡方案"，推动签署《仙女座-银河系合并框架协议》，被评为"星系和平使者"</li>
+          </ul>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <h3 class="exp-title">太阳系发展局</h3>
+            <span class="exp-period">2007.7-2013.1</span>
+          </div>
+          <div class="exp-position">第三行星项目经理（正恒星级）</div>
+          <div class="exp-desc">
+            项目团队：含生态改造组、天体优化组、气候调节组共80名成员
+          </div>
+          <ul class="exp-responsibilities">
+            <li>实施"地球生态迭代计划"，分三阶段完成恐龙种群有序退出（保留3%基因库），引入2000种哺乳动物试点，存活率达92%，生态链稳定性提升40%</li>
+            <li>开展"月球反光率精细化调控"工程，通过表面尘埃分布优化、环形山镜面化处理，使夜间照明亮度提升23%，节约人工光源能耗15%</li>
+            <li>建立"火星色彩管理体系"，通过氧化铁含量微调将地表红色饱和度稳定在RAL 8017标准值±5%区间，强化"红色星球"品牌辨识度</li>
+            <li>实施"地球自转速度优化"专项，将昼夜周期从23.93小时调整至24小时整，同步优化潮汐节律，人类作息适应度调研评分达4.8/5分</li>
+            <li>参与"金星气候调节"实验，设计"硫酸云稀释方案"，虽因温室效应惯性未达预期，但积累的"极端大气改造经验"被纳入《类地行星治理白皮书》</li>
+            <li>推动"木星大红斑美化工程"，通过气旋能量引导使红斑形态保持稳定，直径控制在1.3个地球大小，获"太阳系景观设计奖"</li>
+          </ul>
+          <div class="exp-desc">
+            <strong>离职原因：</strong>2012年底，成果化解"玛雅人的预言"这一突发事件。此后，由于系统升级及人员调整，地球项目进入自动运行阶段。因"星系治理人才计划"晋升至银河系管理委员会
+          </div>
+        </div>
+        
+        <div class="experience-item">
+          <div class="exp-header">
+            <h3 class="exp-title">宇宙边界研究中心</h3>
+            <span class="exp-period">2004.7-2007.6</span>
+          </div>
+          <div class="exp-position">多维空间外交专员（高级）</div>
+          <ul class="exp-responsibilities">
+            <li>作为核心谈判成员参与37次多维宇宙边界磋商，主导制定"平行宇宙坐标隔离机制"，成功签署《平行宇宙互不干涉协议》，获"跨维度和平勋章"</li>
+            <li>优化"虫洞通行证智能审批系统"，开发"目的地风险等级自动评估""时空稳定性检测"等模块，年均审批量达3.14亿份，差错率仅0.0001%</li>
+            <li>组织12届"反物质与正物质友好交流会"，创新"电荷中和缓冲带"技术，使湮灭事故发生率从0.3次/万次接触降至0.01次/万次接触</li>
+            <li>牵头"宇宙边界可持续发展"课题，提出"边界弹性理论"（获宇宙科学院年度理论突破奖），为边界扩张管理提供科学依据</li>
+            <li>参与"高维生物入境管理"系统开发，设计"维度适配性检测""物理规则适应性评估"等功能模块，系统覆盖率达98%</li>
+          </ul>
+          <div class="exp-desc">
+            <strong>离职原因：</strong>因宇宙边界扩张，原岗位与"维度融合管理处"合并，申请转岗至应用实践部门
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 项目经验 -->
+    <section id="projects" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-project-diagram"></i>
+        </div>
+        <h2>项目经验</h2>
+      </div>
+      <div class="card-content">
+        <div class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">银河系年度文明评比（2015）</h3>
+            <span class="project-role">项目总负责人</span>
+          </div>
+          <div class="project-desc">
+            项目规模：覆盖银河系内100000+智慧文明
+          </div>
+          <ul class="project-achievements">
+            <li>构建包含"科技树完整度""资源循环率""星际合作次数"等指标的评估体系，出版《文明发展指数报告》成为星系治理参考标准</li>
+            <li>创新"潜力行星孵化计划"，为获奖文明提供虫洞建设补贴、高级科技共享等支持，近5年培育出12个"星系级创新文明"</li>
+            <li>组织"文明成果展"，通过全息投影技术展示各行星特色，促进跨文明技术交流，促成37项星际合作项目</li>
+          </ul>
+        </div>
+        
+        <div class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">星际交通一体化（2018-2020）</h3>
+            <span class="project-role">项目负责人</span>
+          </div>
+          <div class="project-desc">
+            项目周期：3个地球年 | 核心挑战：虫洞拥堵率达45%、跨旋臂通勤耗时超10光年
+          </div>
+          <ul class="project-achievements">
+            <li>设计"光速公交"系统，采用"曲速引擎+虫洞节点"组合模式，实现行星间一秒直达（误差≤0.001秒）</li>
+            <li>开发"虫洞流量动态分配算法"，根据实时需求调整各通道带宽，拥堵率降至8%，交通效率提升300%</li>
+            <li>建立"星际交通监管中心"，实现全星系交通流量可视化监控，事故率下降92%</li>
+          </ul>
+        </div>
+        
+        <div class="project-item">
+          <div class="project-header">
+            <h3 class="project-title">黑洞清理专项（2012-2014）</h3>
+            <span class="project-role">技术方案总设计师</span>
+          </div>
+          <div class="project-desc">
+            项目目标：消除银河系内50%以上的"危险级黑洞"（引力波动超安全阈值）
+          </div>
+          <ul class="project-achievements">
+            <li>研发"反熵吸尘器"，利用量子隧穿效应提取黑洞吸积盘中的冗余物质，清理效率提升200%</li>
+            <li>建立"黑洞-恒星距离安全阈值模型"，对100个"近距黑洞"实施引力场中和处理，解除对周边行星系的威胁</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 技能特长 -->
+    <section id="skills" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-code"></i>
+        </div>
+        <h2>技能特长</h2>
+      </div>
+      <div class="card-content">
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>空间治理</span>
+              <span>精通</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 95%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>数据处理</span>
+              <span>精通</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 90%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>时间调度</span>
+              <span>熟练</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 85%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>危机处理</span>
+              <span>精通</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 92%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>交通规划</span>
+              <span>熟练</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 88%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>多维谈判</span>
+              <span>精通</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 95%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <h3 style="color: var(--text-primary); margin-top: 30px; margin-bottom: 15px;">语言能力</h3>
+        <div class="skills-grid">
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>银河通用语</span>
+              <span>母语</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 100%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>地球语言</span>
+              <span>精通</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 95%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>火星语言</span>
+              <span>熟练</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 80%"></div>
+            </div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-name">
+              <span>引力波语</span>
+              <span>良好</span>
+            </div>
+            <div class="skill-level">
+              <div class="skill-level-fill" style="width: 75%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <h3 style="color: var(--text-primary); margin-top: 30px; margin-bottom: 15px;">培训经历</h3>
+        <ul style="color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+          <li>2013年参加"多维空间危机管理"高级研修班（结业考核总分98分），掌握"时空折叠修复""维度裂缝封堵"等应急处理技术</li>
+          <li>2015年完成"暗能量调度与分配"专项培训（获"优秀学员"称号），学习"暗能量-物质转化公式""宇宙膨胀能量调控"等核心内容</li>
+          <li>2017年通过"星际谈判与冲突调解"认证课程，获"宇宙高级谈判师"资格，擅长"利益置换谈判法""多维立场共情技巧"</li>
+        </ul>
+        
+        <h3 style="color: var(--text-primary); margin-top: 30px; margin-bottom: 15px;">证书</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+          <div class="contact-item" style="margin: 0;">
+            <i class="fas fa-certificate"></i> 银河系高级管理师证书（2012年）
+          </div>
+          <div class="contact-item" style="margin: 0;">
+            <i class="fas fa-certificate"></i> 多维空间外交官资格证（2008年）
+          </div>
+          <div class="contact-item" style="margin: 0;">
+            <i class="fas fa-certificate"></i> 黑洞信息回收工程师（2013年）
+          </div>
+          <div class="contact-item" style="margin: 0;">
+            <i class="fas fa-certificate"></i> 暗物质资源开发结业证（2014年）
+          </div>
+          <div class="contact-item" style="margin: 0;">
+            <i class="fas fa-certificate"></i> 星际交通安全管理员（2019年）
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- 荣誉奖项 -->
+    <section id="awards" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-award"></i>
+        </div>
+        <h2>荣誉奖项</h2>
+      </div>
+      <div class="card-content">
+        <div class="awards-grid">
+          <div class="award-item">
+            <h3 class="award-title">"最具影响力恒星"提名</h3>
+            <div class="award-org">银河系评委会 | 2012年</div>
+            <div class="award-desc">唯一非恒星类候选人，表彰在星系治理中的突出贡献</div>
+          </div>
+          <div class="award-item">
+            <h3 class="award-title">"最佳行星管理奖"</h3>
+            <div class="award-org">太阳系发展局 | 2015年</div>
+            <div class="award-desc">因地球生态改造项目成效显著而获得此殊荣</div>
+          </div>
+          <div class="award-item">
+            <h3 class="award-title">"年度最受欢迎系长"</h3>
+            <div class="award-org">银河系文明联盟 | 2018年</div>
+            <div class="award-desc">全星系文明投票率89%，创历史最高纪录</div>
+          </div>
+          <div class="award-item">
+            <h3 class="award-title">"和平使者"称号</h3>
+            <div class="award-org">宇宙边界委员会 | 2020年</div>
+            <div class="award-desc">表彰在多维外交中的突出贡献，特别是平行宇宙和平协议的签署</div>
+          </div>
+          <div class="award-item">
+            <h3 class="award-title">"黑洞信息回收创新奖"</h3>
+            <div class="award-org">黑洞技术联盟 | 2021年</div>
+            <div class="award-desc">奖励"反熵吸尘器"技术突破，显著提升黑洞清理效率</div>
+          </div>
+          <div class="award-item">
+            <h3 class="award-title">"虫洞交通安全之星"</h3>
+            <div class="award-org">星际交通管理局 | 2023年</div>
+            <div class="award-desc">表彰在虫洞安全管理方面的卓越表现，保持星际交通零事故记录</div>
+          </div>
+        </div>
+        
+        <h3 style="color: var(--text-primary); margin-top: 30px; margin-bottom: 15px;">社会活动</h3>
+        <ul style="color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+          <li>银河系公益组织"星际环保联盟"核心志愿者（2015-至今），组织"恒星节能减排"巡回宣传，覆盖50个行星系，推动1000+恒星签署《低碳燃烧承诺书》</li>
+          <li>发起"宇宙膨胀速度观测"公益项目，招募3000名业余天文学家组建观测网络，累计发布12期《宇宙膨胀健康报告》</li>
+          <li>连续5年参与"虫洞马拉松"慈善活动，个人最好成绩为"穿越37个虫洞仅用2.718小时"，筹集善款折合1000吨反物质，用于边远星系基础建设</li>
+        </ul>
+        
+        <h3 style="color: var(--text-primary); margin-top: 30px; margin-bottom: 15px;">兴趣爱好</h3>
+        <ul style="color: var(--text-secondary); padding-left: 20px; line-height: 1.8;">
+          <li><strong>宇宙观测：</strong>建立个人"宇宙膨胀速度数据库"，已连续10年记录相关数据，发表《宇宙膨胀加速度波动分析》论文</li>
+          <li><strong>星际运动：</strong>连续三年完成"银河环线跳跃马拉松"（全程10万光年），保持该赛事年龄组纪录</li>
+          <li><strong>艺术创作：</strong>研究"虫洞折叠艺术"，作品《11维蝴蝶结》被宇宙艺术博物馆收藏</li>
+        </ul>
+      </div>
+    </section>
+    
+    <!-- 自我评价 -->
+    <section id="appraise" class="glass-card">
+      <div class="card-title">
+        <div class="card-icon">
+          <i class="fas fa-user-edit"></i>
+        </div>
+        <h2>自我评价</h2>
+      </div>
+      <div class="card-content" style="line-height: 1.8;">
+        <p>本人拥有10年星系治理经验，历经从行星项目到全星系管理的完整历练，具备宏观战略规划能力与微观细节把控力。逻辑思维严密，曾从3.14亿组数据中发现"暗能量分布异常规律"，提出创新性解决方案。</p>
+        <p>在跨文明协作中，能精准理解碳基、硅基、能量体等不同形态文明的沟通模式，主导的73次谈判均达成共赢结果。抗压能力突出，在"超新星爆发应急处理""星系碰撞预警"等高压场景中保持稳定表现。</p>
+        <p>熟悉宇宙基本规则及多维空间特性，擅长将理论转化为实践（如将"弦理论"应用于星际交通设计）。未来希望在星系合并、跨维度治理等领域继续贡献力量，用引力般的凝聚力与恒星般的热情推动宇宙文明协同发展。</p>
+      </div>
+    </section>
+
+    <!-- 返回首页按钮 -->
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="index.html" class="back-to-home">
+        <i class="fas fa-home"></i> 返回首页
+      </a>
+    </div>
+    
+    <!-- 页脚 -->
+    <div class="footer">
+      <p>© 2025 冷某少 | 银河系管理委员会</p>
+    </div>
+  </div>
+  
+  <script>
+    // 修复后的导航功能
+    document.addEventListener('DOMContentLoaded', function() {
+      // 平滑滚动
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          // 更新活动状态
+          document.querySelectorAll('.nav-item').forEach(navItem => {
+            navItem.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          // 平滑滚动
+          targetElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        });
+      });
+      
+      // 滚动时更新导航状态
+      window.addEventListener('scroll', function() {
+        const sections = document.querySelectorAll('section[id]');
+        let currentSection = '';
+        
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.offsetHeight;
+          const scrollPosition = window.scrollY + 100;
+          
+          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+            currentSection = section.getAttribute('id');
+          }
+        });
+        
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+          if (item.getAttribute('href') === `#${currentSection}`) {
+            item.classList.add('active');
+          }
+        });
+      });
+      
+      // 确保Font Awesome加载完成
+      if(typeof FontAwesome === 'undefined') {
+        const faScript = document.createElement('script');
+        faScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js';
+        document.head.appendChild(faScript);
+      }
+    });
+  </script>
+</body>
+</html>
